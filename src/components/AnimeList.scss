@@ -1,0 +1,46 @@
+.cards-container {
+  width: 80%;
+  margin: 0 auto;
+  .MuiPaper-root {
+    padding: 0px !important;
+    margin: 20px !important;
+    min-height: 220px !important;
+    border-radius: 8px;
+  }
+  .MuiCardContent-root {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .item {
+    img {
+      width: 100%;
+      height: 280px !important;
+      height: 100%;
+      object-fit: fill;
+    }
+    .anime-title {
+      height: 64px;
+      padding: 15px 15px 0;
+      .MuiTypography-root {
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        display: flex;
+        text-align: center;
+      }
+    }
+  }
+  .margin-t-b-30 {
+    margin: 30px 0;
+  }
+  .load-more {
+    width: 200px;
+    height: 40px;
+    background: linear-gradient(to right, #2e51a2, #1b7ac2);
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
