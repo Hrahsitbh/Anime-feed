@@ -2,11 +2,9 @@ import React, { useCallback } from 'react';
 import { Card, CardContent, Typography, Grid } from '@material-ui/core';
 import './AnimeList.scss'
 
-let pageCounter = 1;
-
 function AnimeList(props) {
-    const { animes, getAnime, animeName } = props;
-    const loadMoreHandling = useCallback(() => { getAnime(animeName, ++pageCounter) }, [animeName, getAnime]);
+    const { animes, setPagination } = props;
+    const loadMoreHandling = useCallback(() => { setPagination(); }, [setPagination]);
     return (
         <div className="cards-container">
             <Grid container spacing={6} justify="center">

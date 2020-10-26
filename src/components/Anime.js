@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Form, Field } from 'react-final-form'
 import { getSearchedAnime, resetState } from '../redux/actions/anime';
@@ -8,22 +8,30 @@ import './Anime.scss';
 function Anime(props) {
     const { getAnime, animes, resetState, loading, error } = props;
     const [animeName, setAnimeName] = useState('');
+    const [pageCounter, setPageCounter] = useState(1);
 
     useEffect(() => {
-        if(animes.length > 50) window.scrollTo({ top: window.pageYOffset - 3485, behavior: 'smooth' })
+        if (animes.length > 50) window.scrollTo({ top: window.pageYOffset - 3485, behavior: 'smooth' })
     }, [animes])
 
+    const setPagination = useCallback(() => {
+        let pageNum = pageCounter;
+        pageNum++;
+        setPageCounter(pageNum);
+        getAnime(animeName, pageNum);
+    }, [animeName, pageCounter, getAnime]);
+
     const submit = (data) => {
+        setPageCounter(1);
         setAnimeName(data.search);
-        resetState(); 
+        resetState();
         getAnime(data.search, 1);
     }
-
     return (
         <div className="anime-list-container">
             <div className="feed-header">
                 <div className="header-title">
-                   See-Your-Anime
+                    See-Your-Anime
                 </div>
                 <div className="search-bar">
                     <Form
@@ -45,10 +53,10 @@ function Anime(props) {
                 </div>
             </div>
             <div className="anime-feed pos-rel">
-                {animes.length > 0 && <AnimeList animes={animes} getAnime={getAnime} animeName={animeName} />}
+                {animes.length > 0 && <AnimeList animes={animes} getAnime={getAnime} animeName={animeName} pageCounter={pageCounter} setPagination={setPagination} />}
             </div>
             {loading && <div className="img-loader"><img src="https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_11.gif" alt="loader" width="100%" /></div>}
-            {!animes.length  && !loading && <div className="backgroung-text">Nothing's here, Please search for your favourite anime.</div>}
+            {!animes.length && !loading && <div className="backgroung-text">Nothing's here, Please search for your favourite anime.</div>}
             {error && alert('request failed')}
         </div>
     );
